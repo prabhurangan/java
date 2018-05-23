@@ -12,23 +12,19 @@ limitations under the License.
 */
 package io.kubernetes.client.examples;
 
+import java.io.IOException;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+
 import io.kubernetes.client.ApiClient;
 import io.kubernetes.client.ApiException;
 import io.kubernetes.client.Configuration;
 import io.kubernetes.client.apis.CoreV1Api;
-import io.kubernetes.client.models.V1Namespace;
 import io.kubernetes.client.models.V1Node;
 import io.kubernetes.client.models.V1NodeList;
-import io.kubernetes.client.models.V1PersistentVolumeClaimList;
 import io.kubernetes.client.util.Config;
-import io.kubernetes.client.util.Watch;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /** A simple example of how to use Watch API to watch changes in Namespace list. */
 public class WatchExample {
@@ -61,7 +57,6 @@ public class WatchExample {
             		//if(entry.getKey().indexOf("hostname") > -1 || entry.getKey().indexOf("network-device") > -1) {
             			//System.out.println(entry.getKey() + " : " + entry.getValue());
             		//}
-            
             	}
             }
         } catch (Exception e) {
