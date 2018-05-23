@@ -12,15 +12,22 @@ limitations under the License.
 */
 package io.kubernetes.client.examples;
 
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import io.kubernetes.client.ApiClient;
 import io.kubernetes.client.ApiException;
 import io.kubernetes.client.Configuration;
 import io.kubernetes.client.apis.CoreV1Api;
 import io.kubernetes.client.models.V1Namespace;
+import io.kubernetes.client.models.V1Node;
+import io.kubernetes.client.models.V1NodeList;
+import io.kubernetes.client.models.V1PersistentVolumeClaimList;
 import io.kubernetes.client.util.Config;
 import io.kubernetes.client.util.Watch;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /** A simple example of how to use Watch API to watch changes in Namespace list. */
@@ -30,17 +37,35 @@ public class WatchExample {
     client.getHttpClient().setReadTimeout(60, TimeUnit.SECONDS);
     Configuration.setDefaultApiClient(client);
 
-    CoreV1Api api = new CoreV1Api();
+    CoreV1Api api = new CoreV1Api(client);
 
-    Watch<V1Namespace> watch =
-        Watch.createWatch(
-            client,
-            api.listNamespaceCall(
-                null, null, null, null, null, 5, null, null, Boolean.TRUE, null, null),
-            new TypeToken<Watch.Response<V1Namespace>>() {}.getType());
-
-    for (Watch.Response<V1Namespace> item : watch) {
-      System.out.printf("%s : %s%n", item.type, item.object.getMetadata().getName());
-    }
+//    Watch<V1Namespace> watch =
+//        Watch.createWatch(
+//            client,
+//            api.listNamespaceCall(
+//                null, null, null, null, null, 5, null, null, Boolean.TRUE, null, null),
+//            new TypeToken<Watch.Response<V1Namespace>>() {}.getType());
+//
+//    for (Watch.Response<V1Namespace> item : watch) {
+//      System.out.printf("%s : %s%n", item.type, item.object.getMetadata().getName());
+//    }
+    
+    V1NodeList nodeList = null;
+    try {
+    	nodeList = api.listNode("true", null, null, null, null, null, null, null, null);
+            for (V1Node node : nodeList.getItems()) {
+            	Map<String, String>  map = node.getMetadata().getLabels();
+            	// Map<String, List<String>> deviceMap = new HashMap<>();
+            	System.out.println(new Gson().toJson(map));
+            	for (Map.Entry<String, String> entry : map.entrySet()) {
+            		//if(entry.getKey().indexOf("hostname") > -1 || entry.getKey().indexOf("network-device") > -1) {
+            			//System.out.println(entry.getKey() + " : " + entry.getValue());
+            		//}
+            
+            	}
+            }
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
   }
 }

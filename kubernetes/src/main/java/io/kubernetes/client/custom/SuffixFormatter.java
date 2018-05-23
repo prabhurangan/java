@@ -34,7 +34,7 @@ public class SuffixFormatter {
 
     private static final Map<BaseExponent, String> decimalToSuffix = new HashMap<BaseExponent, String>() {
         {
-            for (Entry<String, BaseExponent> entry : suffixToDecimal.entrySet()) {
+            for (java.util.Map.Entry<String, BaseExponent> entry : suffixToDecimal.entrySet()) {
                 put(entry.getValue(), entry.getKey());
             }
         }
@@ -42,7 +42,7 @@ public class SuffixFormatter {
 
     private static final Map<BaseExponent, String> binaryToSuffix = new HashMap<BaseExponent, String>() {
         {
-            for (Entry<String, BaseExponent> entry : suffixToBinary.entrySet()) {
+            for (java.util.Map.Entry<String, BaseExponent> entry : suffixToBinary.entrySet()) {
                 put(entry.getValue(), entry.getKey());
             }
         }

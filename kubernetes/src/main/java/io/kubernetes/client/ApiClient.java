@@ -52,7 +52,7 @@ import io.kubernetes.client.auth.OAuth;
 
 public class ApiClient {
 
-    private String basePath = "https://localhost";
+    private String basePath = "https://api.system.svc.31.tess.io";
     private boolean debugging = false;
     private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
     private String tempFolderPath = null;
